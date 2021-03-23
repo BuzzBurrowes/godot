@@ -573,7 +573,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent> &p_ev) {
 	Ref<InputEventMouseButton> mb = p_ev;
 	if (mb.is_valid() && mb->get_button_index() == BUTTON_LEFT && mb->is_pressed()) {
 		connecting_valid = false;
-		Ref<Texture> port = get_theme_icon("port", "GraphNode");
+		Ref<Texture> port = get_icon("port", "GraphNode");
 		click_pos = mb->get_position();
 		for (int i = get_child_count() - 1; i >= 0; i--) {
 
@@ -685,7 +685,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent> &p_ev) {
 		connecting_valid = click_pos.distance_to(connecting_to) > 20.0 * zoom;
 
 		if (connecting_valid) {
-			Ref<Texture> port = get_theme_icon("port", "GraphNode");
+			Ref<Texture> port = get_icon("port", "GraphNode");
 			Vector2 mpos = mm->get_position();
 			for (int i = get_child_count() - 1; i >= 0; i--) {
 				GraphNode *gn = Object::cast_to<GraphNode>(get_child(i));

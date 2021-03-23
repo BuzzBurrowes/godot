@@ -554,6 +554,7 @@ bool GraphEdit::_filter_input(const Point2 &p_point) {
 			Vector2 pos = gn->get_connection_output_position(j) + gn->get_position();
 			if (is_in_hot_zone(pos / zoom, p_point / zoom)) {
 				return true;
+         }
 		}
 
 		for (int j = 0; j < gn->get_connection_input_count(); j++) {
@@ -686,7 +687,7 @@ void GraphEdit::_top_layer_input(const Ref<InputEvent> &p_ev) {
 		connecting_valid = just_disconnected || click_pos.distance_to(connecting_to / zoom) > 20.0 * zoom;
 
 		if (connecting_valid) {
-			Ref<Texture2D> port = get_theme_icon("port", "GraphNode");
+			Ref<Texture> port = get_icon("port", "GraphNode");
 			Vector2 mpos = mm->get_position() / zoom;
 			for (int i = get_child_count() - 1; i >= 0; i--) {
 				GraphNode *gn = Object::cast_to<GraphNode>(get_child(i));

@@ -262,7 +262,7 @@ void ProjectSettingsEditor::_device_input_add() {
 	Dictionary action = old_val.duplicate();
 	Array events = action["events"];
 
-   input_map_helper_timer->stop();
+	input_map_helper_timer->stop();
 
 	switch (add_type) {
 
@@ -352,7 +352,7 @@ void ProjectSettingsEditor::_device_input_add() {
 }
 
 void ProjectSettingsEditor::_device_input_cancel() {
-   input_map_helper_timer->stop();
+	input_map_helper_timer->stop();
 }
 
 void ProjectSettingsEditor::_set_current_device(int i_device) {
@@ -528,10 +528,10 @@ void ProjectSettingsEditor::_add_item(int p_item, Ref<InputEvent> p_exiting_even
 				_set_current_device(0);
 				device_input->get_ok()->set_text(TTR("Add"));
 			}
-         for (int i = 0; i < JOY_AXIS_MAX; ++i) {
-            _last_axis_reading[i] = Input::get_singleton()->get_joy_axis(_get_current_device(), i);
-         }
-         input_map_helper_timer->start();
+			for (int i = 0; i < JOY_AXIS_MAX; ++i) {
+				_last_axis_reading[i] = Input::get_singleton()->get_joy_axis(_get_current_device(), i);
+			}
+			input_map_helper_timer->start();
 
 		} break;
 		case INPUT_JOY_BUTTON: {
@@ -554,7 +554,7 @@ void ProjectSettingsEditor::_add_item(int p_item, Ref<InputEvent> p_exiting_even
 				_set_current_device(0);
 				device_input->get_ok()->set_text(TTR("Add"));
 			}
-         input_map_helper_timer->start();
+			input_map_helper_timer->start();
 
 		} break;
 		default: {
@@ -1700,8 +1700,7 @@ void ProjectSettingsEditor::_toggle_search_bar(bool p_pressed) {
 		search_box->clear();
 		search_bar->hide();
 		add_prop_bar->show();
-	}<<<<<<< HEAD
-
+	}
 }
 
 void ProjectSettingsEditor::set_plugins_page() {
@@ -1729,30 +1728,28 @@ void ProjectSettingsEditor::_editor_restart_close() {
 }
 
 void ProjectSettingsEditor::_input_map_helper_timer_timeout() {
-   if (add_type == INPUT_JOY_BUTTON) {
-      for (int i = 0; i < JOY_BUTTON_MAX; i++) {
-         if (Input::get_singleton()->is_joy_button_pressed(_get_current_device(), i)) {
-            device_index->select(i);
-            break;
-         }
-      }
-      return;
+	if (add_type == INPUT_JOY_BUTTON) {
+		for (int i = 0; i < JOY_BUTTON_MAX; i++) {
+			if (Input::get_singleton()->is_joy_button_pressed(_get_current_device(), i)) {
+				device_index->select(i);
+				break;
+			}
+		}
+		return;
+	} else if (add_type == INPUT_JOY_MOTION) {
+		for (int i = 0; i < JOY_AXIS_MAX; i++) {
+			float axisValue = Input::get_singleton()->get_joy_axis(_get_current_device(), i);
+			if (ABS(axisValue - _last_axis_reading[i]) > 0.1f) {
+				if (axisValue < -0.75f) {
+					device_index->select(i * 2);
+				} else if (axisValue > 0.75f) {
+					device_index->select(i * 2 + 1);
+				}
+			}
+			_last_axis_reading[i] = axisValue;
+		}
+		return;
 	}
-   else if (add_type == INPUT_JOY_MOTION) {
-      for (int i = 0; i < JOY_AXIS_MAX; i++) {
-         float axisValue = Input::get_singleton()->get_joy_axis(_get_current_device(), i);
-         if (ABS(axisValue - _last_axis_reading[i]) > 0.1f) {
-            if (axisValue < -0.75f) {
-               device_index->select(i * 2);
-            }
-            else if (axisValue > 0.75f) {
-               device_index->select(i * 2 + 1);
-            }
-         }
-         _last_axis_reading[i] = axisValue;
-      }
-      return;
-   }
 }
 
 void ProjectSettingsEditor::_bind_methods() {
@@ -1803,7 +1800,6 @@ void ProjectSettingsEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_editor_restart_request"), &ProjectSettingsEditor::_editor_restart_request);
 	ClassDB::bind_method(D_METHOD("_editor_restart"), &ProjectSettingsEditor::_editor_restart);
 	ClassDB::bind_method(D_METHOD("_editor_restart_close"), &ProjectSettingsEditor::_editor_restart_close);
-
 
 	ClassDB::bind_method(D_METHOD("_input_map_helper_timer_timeout"), &ProjectSettingsEditor::_input_map_helper_timer_timeout);
 	ClassDB::bind_method(D_METHOD("_device_input_cancel"), &ProjectSettingsEditor::_device_input_cancel);
@@ -2007,7 +2003,6 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	input_map_helper_timer->set_wait_time(.1);
 	input_map_helper_timer->connect("timeout", this, "_input_map_helper_timer_timeout");
 
-
 	l = memnew(Label);
 	l->set_text(TTR("Press a Key..."));
 	l->set_anchors_and_margins_preset(Control::PRESET_WIDE);
@@ -2024,7 +2019,7 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	add_child(device_input);
 	device_input->get_ok()->set_text(TTR("Add"));
 	device_input->connect("confirmed", this, "_device_input_add");
-   device_input->get_cancel()->connect("pressed", this, "_device_input_cancel");
+	device_input->get_cancel()->connect("pressed", this, "_device_input_cancel");
 
 	hbc = memnew(HBoxContainer);
 	device_input->add_child(hbc);

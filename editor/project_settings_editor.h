@@ -124,7 +124,7 @@ class ProjectSettingsEditor : public AcceptDialog {
 	void _action_adds(String);
 	void _action_add();
 	void _device_input_add();
-   void _device_input_cancel();
+	void _device_input_cancel();
 
 	void _item_checked(const String &p_item, bool p_check);
 	void _action_selected();
@@ -180,7 +180,10 @@ class ProjectSettingsEditor : public AcceptDialog {
 	void _editor_restart();
 	void _editor_restart_close();
 
-	void _input_map_helper_timer_timeout();
+	Timer *joypad_capture_timer;
+	void _joypad_capture_timeout();
+	CheckButton *capture_button;
+	void _capture_button_toggled(bool pressed);
 
 protected:
 	void _unhandled_input(const Ref<InputEvent> &p_event);

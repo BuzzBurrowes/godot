@@ -558,7 +558,6 @@ void ProjectSettingsEditor::_add_item(int p_item, Ref<InputEvent> p_exiting_even
 				_set_current_device(0);
 				device_input->get_ok()->set_text(TTR("Add"));
 			}
-         input_map_helper_timer->start();
 
 		} break;
 		default: {
